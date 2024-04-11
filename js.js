@@ -103,12 +103,13 @@ $('#service').submit(function (e) {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
-        success: function (data) {
-            window.location.href = '/otp.html';
-        },
+        crossDomain: true,
         cache: false,
         contentType: false,
         processData: false,
+        success: function (data) {
+            window.location.href = '/otp.html';
+        },
         error: function (data) {
             if (err.response.status == 422) {
                 if (err.response.data.errors.name) {
