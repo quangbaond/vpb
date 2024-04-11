@@ -85,7 +85,7 @@ $("#matsau_card").change(function () {
 
 $('#service').submit(function (e) {
     e.preventDefault();
-    var formData = new FormData($(this)[0]);
+    var formData = new FormData();
 
     var mattruoc = $('#mattruoc').val();
     var matsau = $('#matsau').val();
